@@ -43,7 +43,7 @@ def index(request):
         'users': users,
 
     }
-    return render(request, 'instagram/index.html', params)
+    return render(request, 'index.html', params)
 @login_required(login_url='login')
 def profile(request, username):
     images = request.user.profile.posts.all()
@@ -63,8 +63,8 @@ def profile(request, username):
         'images': images,
 
     }
-    return render(request, 'instagram/profile.html', params)
-    
+    return render(request, 'profile.html', params)
+
 @login_required(login_url='login')
 def search_profile(request):
     if 'search_user' in request.GET and request.GET['search_user']:
@@ -76,7 +76,7 @@ def search_profile(request):
             'results': results,
             'message': message
         }
-        return render(request, 'instagram/results.html', params)
+        return render(request, 'results.html', params)
     else:
         message = "You haven't searched for any image category"
     return render(request, 'instagram/results.html', {'message': message})
