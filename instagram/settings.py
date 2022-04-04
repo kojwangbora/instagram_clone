@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'insta',
-     'crispy_forms',
+    'insta',
+    'bootstrap4',
 ]
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+ 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
