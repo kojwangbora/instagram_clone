@@ -48,8 +48,8 @@
                 <div class="modal-content">
                     <form action="" method="post" novalidate enctype="multipart/form-data" class="mr-4 mt-4 ml-4 mb-4">
                         {% csrf_token%}
-                        {{ user_form|bootstrap_form}}
-                        {{ prof_form|bootstrap_form}}
+                        {{ user_form|form}}
+                        {{ prof_form|form}}
                         <button type="submit" class="btn btn-primary btn-sm"> Update Profile</button>
                     </form>
                 </div>
