@@ -1,6 +1,6 @@
 # Instagram_Clone
 
->[Owiti-Charles](https://github.com/kojwangbora)  
+>[Kojwang Elibora](https://github.com/kojwangbora)  
   
 # Description  
 This is a clone of  Instagram where people share their  images and videos for other users to view. 
@@ -75,4 +75,4 @@ Open the application on your browser `127.0.0.1:8000`.
 If you have any question or contributions, please email me at [kojwangbora254@gmail.com]  
   
    
-* Copyright (c) 2019 **Elibora Kojwang**
+* Copyright (c) 2022 **Elibora Kojwang**
