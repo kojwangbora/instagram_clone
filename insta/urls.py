@@ -12,6 +12,6 @@ urlpatterns=[
     re_path(r'', LoginView.as_view(), {"next_page": '/'}),
     
     path('profile/<username>/', views.profile, name='profile'),
-    # path('user_profile/<username>/', views.user_profile, name='user_profile'),
+    path('user_profile/<username>/', views.user_profile, name='user_profile'),
     path('search/', views.search_profile, name='search'),
 ]
