@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.http  import HttpResponse, HttpResponseRedirect
+from django.http  import HttpResponse, HttpResponseRedirect, JsonResponse
 from .forms import SignUpForm, UpdateUserProfileForm, PostForm, CommentForm,UpdateUserForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from .models import Post, Comment, Profile, Follow
 from django.views.generic import RedirectView
+from django.template.loader import render_to_string
 # Create your views here.
 def welcome(request):
     return render(request, 'welcome.html')
@@ -176,4 +177,24 @@ class PostLikeToggle(RedirectView):
         else:
             obj.likes.add(user)
         return url_
+
+def like_post(request):
+    # image = get_object_or_404(Post, id=request.POST.get('image_id'))
+    image = get_object_or_404(Post, id=request.POST.get('id'))
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        image.likes.remove(request.user)
+        is_liked = False
+    else:
+        image.likes.add(request.user)
+        is_liked = False
+
+    params = {
+        'image': image,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    if request.is_ajax():
+        html = render_to_string('instagram/like_section.html', params, request=request)
+        return JsonResponse({'form': html})
 
