@@ -1,6 +1,7 @@
 from django.urls import re_path, path,include
 from . import views
 from django.contrib.auth.views import LoginView
+from insta.views import PostLikeToggle
 # from django.contrib.auth import authenticate, login
 
 urlpatterns=[
@@ -14,4 +15,7 @@ urlpatterns=[
     path('profile/<username>/', views.profile, name='profile'),
     path('user_profile/<username>/', views.user_profile, name='user_profile'),
     path('search/', views.search_profile, name='search'),
+    path('post/<id>', views.post_comment, name='comment'),
+    # path('post/<id>/like', PostLikeToggle.as_view(), name='liked'),
+    # path('like', views.like_post, name='like_post'),
 ]

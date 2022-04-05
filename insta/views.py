@@ -6,6 +6,7 @@ from .forms import SignUpForm, UpdateUserProfileForm, PostForm, CommentForm,Upda
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from .models import Post, Comment, Profile, Follow
+from django.views.generic import RedirectView
 # Create your views here.
 def welcome(request):
     return render(request, 'welcome.html')
@@ -88,7 +89,8 @@ def user_profile(request, username):
         'follow_status': follow_status
     }
     print(followers)
-    return render(request, 'instagram/user_profile.html', params)
+    return render(request, 'user_profile.html', params)
+
 @login_required(login_url='login')
 def search_profile(request):
     if 'search_user' in request.GET and request.GET['search_user']:
@@ -137,4 +139,41 @@ def search_profile(request):
     else:
         message = "You haven't searched for any image category"
     return render(request, 'results.html', {'message': message})
+
+@login_required(login_url='login')
+def post_comment(request, id):
+    image = get_object_or_404(Post, pk=id)
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        is_liked = True
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            savecomment = form.save(commit=False)
+            savecomment.post = image
+            savecomment.user = request.user.profile
+            savecomment.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = CommentForm()
+    params = {
+        'image': image,
+        'form': form,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    return render(request, 'single_post.html', params)
+
+class PostLikeToggle(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        id = self.kwargs.get('id')
+        print(id)
+        obj = get_object_or_404(Post, pk=id)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user in obj.likes.all():
+            obj.likes.remove(user)
+        else:
+            obj.likes.add(user)
+        return url_
 
