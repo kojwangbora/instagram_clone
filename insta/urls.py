@@ -12,8 +12,10 @@ urlpatterns=[
     path('account/', include('django.contrib.auth.urls')),
     re_path(r'', LoginView.as_view(), {"next_page": '/'}),
     
-    path('profile/<username>/', views.profile, name='profile'),
     path('user_profile/<username>/', views.user_profile, name='user_profile'),
+    
+    path('profile/<username>/', views.profile, name='profile'),
+   
     path('search/', views.search_profile, name='search'),
     path('post/<id>', views.post_comment, name='comment'),
     path('post/<id>/like', PostLikeToggle.as_view(), name='liked'),

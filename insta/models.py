@@ -34,7 +34,7 @@ class Profile(models.Model):
         return cls.objects.filter(user__username__icontains=name).all()
 
 class Post(models.Model):
-    image = models.ImageField(upload_to='posts/')
+    image = models.ImageField(upload_to='images/')
     name = models.CharField(max_length=250, blank=True)
     caption = models.CharField(max_length=250, blank=True)
     likes = models.ManyToManyField(User, related_name='likes', blank=True, )
